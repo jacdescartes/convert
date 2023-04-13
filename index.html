@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unit Conversion App</title>
+    <link rel="stylesheet" href="https://cdn.webix.com/edge/webix.css" type="text/css">
+    <script src="https://cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+    <script src="/data.js" type="text/javascript"></script>
+</head>
+<body>
+    <script>
+    webix.ui({
+        view: "form",
+        elements: [
+            { view: "text", label: "Value to Convert", labelWidth:160, id:"value", name: "value", required: true },
+            { view: "select", label: "From Unit", labelWidth:160, id:"from", name: "from", options:units, required: true },
+            { view: "select", label: "To Unit", labelWidth:160, id:"to", name: "to", options:units, required: true },
+            { view: "button", value: "Convert", click: "convertUnits" }
+        ]
+    });
+
+    function convertUnits(){
+        var value=$$("value").getValue();
+        var from =$$("from").getValue();
+        var to = $$("to").getValue();
+
+        var from_factor=get_from_factor(from);
+        var to_factor=get_to_factor(to);
+        
+        var result = value*to_factor/from_factor;
+        webix.message(value+" "+ from + " = " + result.toFixed(2) + " " + to);
+    }
+    </script>
+    <div id="app"></div>
+</body>
+</html>
